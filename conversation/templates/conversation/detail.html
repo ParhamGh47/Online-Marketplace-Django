@@ -1,34 +1,37 @@
-    {% extends "core/base.html" %}
+{% extends "core/base.html" %}
 
-    {% block title %}Conversation{% endblock %}
+{% block title %}Conversation{% endblock %}
 
-    {% block content %}
-    <h1 class="mb-6 text-3xl">Conversation</h1>
+{% block content %}
+<h1 class="mb-6 text-3xl text-teal-400">Conversation</h1>
 
-    <div class="space-y-6">
-        {% for message in conversation.message.all %}
-            <div class="p-6 rounded-xl
+<div class="space-y-6">
+    {% for message in conversation.message.all %}
+        <div class="p-6 rounded-xl border
             {% if message.created_by == request.user %}
-                bg-blue-100
+                bg-teal-500/10 border-teal-500/40 ml-12
             {% else %}
-                bg-gray-100
-            {% endif %} 
-            ">
-                <p class="mb-4">
-                    <strong>{{ message.created_by.username }}</strong>
-                    <span class="text-gray-500"> @ {{ message.modified_at|default:message.created_at }}</span>
-                </p>
-                <p>{{ message.content }}</p>
-            </div>
-        {% endfor %}
-    </div>
+                bg-[#0e141b] border-teal-900 mr-12
+            {% endif %}
+        ">
+            <p class="mb-2 text-sm text-gray-400">
+                <strong class="text-gray-200">
+                    {{ message.created_by.username }}
+                </strong>
+                · {{ message.modified_at|default:message.created_at }}
+            </p>
+            <p class="text-gray-200">{{ message.content }}</p>
+        </div>
+    {% endfor %}
+</div>
 
-    <form method="post" action="." class="mt-6">
-        {% csrf_token %}
+<form method="post" action="." class="mt-8">
+    {% csrf_token %}
+    {{ form.as_p }}
 
-        {{ form.as_p }}
-
-        <button class="mt-4 py-4 px-8 text-lg bg-teal-500 hover:bg-teal-700 rounded-xl text-white">Submit</button>
-    </form>
-
-    {% endblock %}
+    <button
+        class="mt-4 py-4 px-8 bg-teal-500 text-black rounded-xl hover:bg-teal-400">
+        Send
+    </button>
+</form>
+{% endblock %}

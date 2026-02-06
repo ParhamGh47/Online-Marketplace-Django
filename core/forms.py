@@ -2,39 +2,61 @@ from django import forms
 from django.contrib.auth.forms import UserCreationForm, AuthenticationForm
 from django.contrib.auth.models import User
 
+BASE_INPUT_CLASSES = (
+    "w-full py-4 px-6 rounded-xl "
+    "bg-[#0b0f14] text-gray-200 "
+    "border border-teal-900 "
+    "placeholder-gray-500 "
+    "focus:outline-none focus:border-teal-500 "
+    "focus:ring-2 focus:ring-teal-500/30 "
+    "transition"
+)
+
 class SignupForm(UserCreationForm):
     class Meta:
         model = User
         fields = ('username', 'email', 'password1', 'password2')
 
-    username = forms.CharField(widget=forms.TextInput(attrs={
-        'placeholder': 'Your username',
-        'class': 'w-full py-4 px-6 rounded-xl'
-    }))
+    username = forms.CharField(
+        widget=forms.TextInput(attrs={
+            'placeholder': 'Your username',
+            'class': BASE_INPUT_CLASSES
+        })
+    )
 
-    email = forms.CharField(widget=forms.TextInput(attrs={
-        'placeholder': 'Your email adderss',
-        'class': 'w-full py-4 px-6 rounded-xl'
-    }))
+    email = forms.EmailField(
+        widget=forms.EmailInput(attrs={
+            'placeholder': 'Your email address',
+            'class': BASE_INPUT_CLASSES
+        })
+    )
 
-    password1 = forms.CharField(widget=forms.TextInput(attrs={
-        'placeholder': 'Your password',
-        'class': 'w-full py-4 px-6 rounded-xl'
-    }))
+    password1 = forms.CharField(
+        widget=forms.PasswordInput(attrs={
+            'placeholder': 'Your password',
+            'class': BASE_INPUT_CLASSES
+        })
+    )
 
-    password2 = forms.CharField(widget=forms.TextInput(attrs={
-        'placeholder': 'Repeat password',
-        'class': 'w-full py-4 px-6 rounded-xl'
-    }))
+    password2 = forms.CharField(
+        widget=forms.PasswordInput(attrs={
+            'placeholder': 'Repeat password',
+            'class': BASE_INPUT_CLASSES
+        })
+    )
 
 
 class LoginForm(AuthenticationForm):
-    username = forms.CharField(widget=forms.TextInput(attrs={
-        'placeholder': 'Your username',
-        'class': 'w-full py-4 px-6 rounded-xl'
-    }))
+    username = forms.CharField(
+        widget=forms.TextInput(attrs={
+            'placeholder': 'Your username',
+            'class': BASE_INPUT_CLASSES
+        })
+    )
 
-    password = forms.CharField(widget=forms.TextInput(attrs={
-        'placeholder': 'Your password',
-        'class': 'w-full py-4 px-6 rounded-xl'
-    }))
+    password = forms.CharField(
+        widget=forms.PasswordInput(attrs={
+            'placeholder': 'Your password',
+            'class': BASE_INPUT_CLASSES
+        })
+    )

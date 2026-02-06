@@ -3,23 +3,24 @@
 {% block title %}Inbox{% endblock %}
 
 {% block content %}
-<h1 class="mb-6 text-3xl">Inbox</h1>
+<h1 class="mb-6 text-3xl text-teal-400">Inbox</h1>
 
 <div class="space-y-6">
     {% for conversation in conversations %}
-        <a href="{% url 'conversation:detail' conversation.id %}" class="block">
-            <div class="p-6 flex bg-gray-100 rounded-xl">
+        <a href="{% url 'conversation:detail' conversation.id %}">
+            <div class="p-6 flex bg-[#0e141b] rounded-xl border border-teal-900 hover:border-teal-500 transition">
                 <div class="pr-6">
-                    <img src="{{ conversation.item.image.url }}" class="w-20 rounded-xl">
+                    <img src="{{ conversation.item.image.url }}" class="w-20 rounded-xl border border-teal-900">
                 </div>
 
                 <div>
                     {% for member in conversation.members.all %}
                         {% if member != request.user %}
-                            <p class="mb-4">
-                                <strong>{{ member.username }}</strong> | {{ conversation.modified_at }}
+                            <p class="mb-2 text-gray-300">
+                                <strong class="text-teal-400">{{ member.username }}</strong>
+                                <span class="text-gray-500"> · {{ conversation.modified_at }}</span>
                             </p>
-                            <p>{{ conversation.item.name }}</p>
+                            <p class="text-gray-400">{{ conversation.item.name }}</p>
                         {% endif %}
                     {% endfor %}
                 </div>

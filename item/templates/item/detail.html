@@ -5,54 +5,68 @@
 {% block content %}
 <div class="grid grid-cols-5 gap-6">
     <div class="col-span-3">
-        <img src="{{ item.image.url }}" class="rounded-xl"></img>
+        <img src="{{ item.image.url }}" class="rounded-xl border border-teal-900">
     </div>
-    <div class="col-span-2 p-6 bg-gray-100 rounded-xl">
-        <h1 class="mb-6 text-3xl ">{{ item.name }}</h1>
-        <p class="text-gray-500"><strong>Price: </strong>{{ item.price }}</p>
-        <p class="text-gray-500"><strong>Seller: </strong>{{ item.created_by }}</p>
+
+    <div class="col-span-2 p-6 bg-[#0e141b] rounded-xl border border-teal-900">
+        <h1 class="mb-6 text-3xl text-teal-400">{{ item.name }}</h1>
+
+        <p class="text-gray-400">
+            <strong class="text-gray-300">Price:</strong>
+            <span class="text-teal-300">{{ item.price }}</span>
+        </p>
+
+        <p class="text-gray-400">
+            <strong class="text-gray-300">Seller:</strong>
+            {{ item.created_by }}
+        </p>
 
         {% if item.description %}
-        <p class="text-gray-700"><strong>Description: </strong>{{ item.description }}</p>
+            <p class="mt-4 text-gray-300">
+                <strong class="text-gray-400">Description:</strong><br>
+                {{ item.description }}
+            </p>
         {% endif %}
 
         {% if request.user == item.created_by %}
-            <div class="mt-6 p-6 bg-white rounded-xl">
-                <p>Your item<p>
-                <a href="{% url 'item:edit' item.id %}" class="inline-block mt-6 px-6 py-3 text-lg font-semibold bg-teal-500 text-white rounded-xl">
+            <div class="mt-6 p-6 bg-[#0b0f14] rounded-xl border border-teal-900">
+                <p class="text-gray-400">Your item</p>
+
+                <a href="{% url 'item:edit' item.id %}"
+                   class="inline-block mt-4 px-6 py-3 bg-teal-500 text-black rounded-xl hover:bg-teal-400">
                     Edit
                 </a>
-                <a href="{% url 'item:delete' item.id %}" class="inline-block mt-6 px-6 py-3 text-lg font-semibold bg-red-500 text-white rounded-xl">
+
+                <a href="{% url 'item:delete' item.id %}"
+                   class="inline-block mt-4 px-6 py-3 bg-red-500 text-white rounded-xl hover:bg-red-400">
                     Delete
                 </a>
             </div>
         {% else %}
-            <a href="{% url 'conversation:new' item.id %}" class="inline-block mt-6 px-6 py-3 text-lg font-semibold bg-teal-500 text-white hover:bg-teal-700 rounded-xl">Contact Seller</a>
+            <a href="{% url 'conversation:new' item.id %}"
+               class="inline-block mt-6 px-6 py-3 bg-teal-500 text-black rounded-xl hover:bg-teal-400">
+                Contact Seller
+            </a>
         {% endif %}
     </div>
 </div>
 
-<div class="mt-6 px-6 py-12 bg-gray-100 rounded-xl">
-    <h2 class="mb-12 text-2xl text-center">Related items</h2>
+<div class="mt-12 px-6 py-12 bg-[#0e141b] rounded-xl border border-teal-900">
+    <h2 class="mb-12 text-2xl text-center text-teal-400">Related items</h2>
 
-    <div class="grid grid-cols-3 gap-3">
+    <div class="grid grid-cols-3 gap-6">
         {% for item in related_items %}
-            <div>
-                <a href="{% url 'item:detail' item.id %}">
-                    <div>
-                        {% if item.image %}
-                            <img src="{{ item.image.url }}" class="rounded-t-xl" />
-                        {% endif %}
-                    </div>
-
-                    <div class="p-6 bg-white rounded-b-xl">
-                        <h2 class="text-2xl">{{ item.name }}</h2>
-                        <p class="text-gray-500">Price: {{ item.price }}</p>
-                    </div>
-                </a>
-            </div>
+            <a href="{% url 'item:detail' item.id %}"
+               class="bg-[#0b0f14] rounded-xl border border-teal-900 hover:border-teal-500 transition">
+                {% if item.image %}
+                    <img src="{{ item.image.url }}" class="rounded-t-xl">
+                {% endif %}
+                <div class="p-6">
+                    <h2 class="text-xl text-gray-200">{{ item.name }}</h2>
+                    <p class="text-teal-300">{{ item.price }}</p>
+                </div>
+            </a>
         {% endfor %}
     </div>
 </div>
-
 {% endblock %}
